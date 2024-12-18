@@ -92,10 +92,10 @@ enum KeyboardType {
   asciiCapableNumberPad
 }
 
-class PatchedNativeTextInput extends StatefulWidget {
+class NativeTextInput extends StatefulWidget {
   static const viewType = 'flutter_native_text_input';
 
-  const PatchedNativeTextInput({
+  const NativeTextInput({
     Key? key,
     this.controller,
     this.decoration,
@@ -266,7 +266,7 @@ class IosOptions {
   });
 }
 
-class _NativeTextInputState extends State<PatchedNativeTextInput> {
+class _NativeTextInputState extends State<NativeTextInput> {
   final Completer<MethodChannel> _channel = Completer();
 
   TextEditingController? _controller;
@@ -327,7 +327,7 @@ class _NativeTextInputState extends State<PatchedNativeTextInput> {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return PlatformViewLink(
-          viewType: PatchedNativeTextInput.viewType,
+          viewType: NativeTextInput.viewType,
           surfaceFactory: (context, controller) => AndroidViewSurface(
             controller: controller as AndroidViewController,
             hitTestBehavior: PlatformViewHitTestBehavior.opaque,
@@ -336,7 +336,7 @@ class _NativeTextInputState extends State<PatchedNativeTextInput> {
           onCreatePlatformView: (PlatformViewCreationParams params) {
             return PlatformViewsService.initSurfaceAndroidView(
               id: params.id,
-              viewType: PatchedNativeTextInput.viewType,
+              viewType: NativeTextInput.viewType,
               layoutDirection: TextDirection.ltr,
               creationParams: _buildCreationParams(layout),
               creationParamsCodec: const StandardMessageCodec(),
@@ -350,7 +350,7 @@ class _NativeTextInputState extends State<PatchedNativeTextInput> {
         );
       case TargetPlatform.iOS:
         return UiKitView(
-          viewType: PatchedNativeTextInput.viewType,
+          viewType: NativeTextInput.viewType,
           creationParamsCodec: const StandardMessageCodec(),
           creationParams: _buildCreationParams(layout),
           onPlatformViewCreated: _createMethodChannel,
